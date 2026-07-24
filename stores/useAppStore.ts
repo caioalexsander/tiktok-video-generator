@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AppState {
@@ -51,11 +51,7 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: 'tiktok-video-storage',
-      storage: {
-        getItem: (name) => AsyncStorage.getItem(name),
-        setItem: (name, value) => AsyncStorage.setItem(name, value),
-        removeItem: (name) => AsyncStorage.removeItem(name),
-      },
+      storage: createJSONStorage(() => AsyncStorage),
     }
   )
 );
